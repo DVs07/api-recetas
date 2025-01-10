@@ -14,12 +14,16 @@ function iniciarApp() {
         obtenerFavoritos();
     }
 
-    function obtenerCategorias(){
+    async function obtenerCategorias(){
         const url = 'https://www.themealdb.com/api/json/v1/1/list.php?c=list';
 
-        fetch(url)
-            .then(respuesta => respuesta.json())
-            .then(resultado => mostrarCategorias(resultado.meals));
+        try {
+            const respuesta = await fetch(url);
+            const resultado = await respuesta.json();
+            mostrarCategorias(resultado.meals);
+        } catch (error) {
+            console.log(error); 
+        }
     }
 
     function mostrarCategorias(categorias = []) {
